@@ -1,0 +1,133 @@
+set nocompatible  " Use Vim settings, rather then Vi settings
+
+" Declare bundles are handled via Vundle
+filetype on
+filetype off
+
+" Use filetype plugins
+filetype plugin on
+filetype plugin indent on
+
+" Enable colors
+syntax on
+
+" Vim Settings
+set hidden
+set nobackup
+set nowritebackup
+set noswapfile        " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
+set history=1000
+set undolevels=1000
+set ruler             " show the cursor position all the time
+set showcmd           " display incomplete commands
+set incsearch         " do incremental searching
+set hlsearch          " highlight search
+set hl=l:Incsearch    " highlight mode for hlsearch
+set ignorecase        " ignore case when searching
+set smartcase         " ignore case if search pattern is all lowercase, case-sensitive otherwise
+set laststatus=2      " Always display the status line
+set nowrap            " don't wrap lines if they are too large
+set backspace=indent,eol,start
+set autoindent
+set copyindent
+set autoread
+set autowrite
+set autowriteall
+
+" tab width spaces
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set shiftround
+set expandtab
+
+" ignore files and folders from listings
+set wildignore+=.git/*,.svn/*,.hg/*,_darcs/*,build/*,dist/*,*.o,*.so,*.pyc
+
+let mapleader = ','
+set background=dark
+
+" Use Ack instead of Grep when available
+if executable("ack")
+  set grepprg=ack\ -H\ --nogroup\ --nocolor
+endif
+
+" Numbers
+set number
+set numberwidth=5
+
+" Mouse
+" Take out minus to enable visual mode
+set mouse-=a
+
+" Print line numbers when printing hard copy
+set printoptions=number:y
+
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
+
+" Filetypes
+au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Procfile,config.ru,*.rake} set ft=ruby
+
+" In Makefiles, use real tabs, not tabs expanded to spaces
+au FileType make setlocal noexpandtab
+
+" make Python follow PEP8 for whitespace ( http://www.python.org/dev/peps/pep-0008/ )
+" setting tabstop to 8 for legacy stormpulse files
+au FileType python setlocal softtabstop=4 tabstop=8 shiftwidth=4
+
+" Remember last location in file, but not for commit messages.
+" see :help last-position-jump
+au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g`\"" | endif
+
+" Mappings
+set pastetoggle=<F12>
+
+" format the entire file
+nmap <leader>fef ggVG=
+
+" cd to the directory containing the file in the buffer
+nmap <silent> <leader>cd :lcd %:h<CR>
+
+" Map Ctrl-l and Ctrl-h to indenting or outdenting
+" while keeping the original selection in visual mode
+vmap <C-l> >gv
+vmap <C-h> <gv
+
+nmap <C-l> >>
+nmap <C-h> <<
+
+omap <C-l> >>
+omap <C-h> <<
+
+imap <C-l> <Esc>>>i
+imap <C-h> <Esc><<i
+
+" Bubble single lines
+nmap <C-k> [e
+nmap <C-j> ]e
+
+" Bubble multiple lines
+vmap <C-k> [egv
+vmap <C-j> ]egv
+
+
+autocmd FileType html,xhtml,xml,htmldjango,jinja,mako setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+autocmd BufNewFile,BufRead *.mako setlocal ft=mako.html
+autocmd BufNewFile,BufRead *.myt setlocal ft=html.myghty expandtab shiftwidth=4 tabstop=8 softtabstop=4
+
+let html_no_rendering=1
+
+" Include pathogen, for use of syntastic
+execute pathogen#infect()
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_flake8_args='--ignore=E501'

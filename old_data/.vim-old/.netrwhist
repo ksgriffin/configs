@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/home/kgriffin/riskpulse/research/wx_ops_automation/model_plots'
+let g:netrw_dirhist_2='/home/kgriffin/riskpulse/riskbox/core/pylons/stormpulse/lib/cache'
+let g:netrw_dirhist_3='/home/kgriffin/riskpulse/riskbox/core/pylons/stormpulse/etl/temp/regions'
+let g:netrw_dirhist_4='/home/kgriffin/.local/share/gnome-shell/extensions'
+let g:netrw_dirhist_5='/home/kgriffin/riskpulse/marble/src/marble/layers'
+let g:netrw_dirhist_6='/home/kgriffin/riskpulse/riskbox/.pgtmp'
